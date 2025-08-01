@@ -1,9 +1,7 @@
-// src/components/ProductListItem.tsx
-
 import React from 'react';
 import { Product } from '../types';
 import { PurchaseButton } from './PurchaseButton';
-import { Package } from 'lucide-react'; // Resim olmadığında göstereceğimiz ikon
+import { Package } from 'lucide-react';
 
 interface ProductListItemProps {
     product: Product;

@@ -21,6 +21,15 @@ class PurchaseResource extends JsonResource
             'price' => $this->price,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
+            'product' => $this->whenLoaded('product', function () {
+                return [
+                    'id' => $this->product->id,
+                    'name' => $this->product->name,
+                    'description' => $this->product->description,
+                    'price' => $this->product->price,
+                    'imageUrl' => $this->product->imageUrl,
+                ];
+            }),
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Purchase;
 use App\Models\Product;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PurchaseService {
     /**
@@ -35,19 +36,28 @@ class PurchaseService {
      */
     public function createPurchase(array $validatedData)
     {
-        // Get the product to get its price
         $product = Product::find($validatedData['product_id']);
-        
-        // Generate a unique transaction ID
         $transactionId = 'TXN_' . uniqid() . '_' . time();
-        
-        return Purchase::create([
+
+        $purchaseDetailUrl = env('FRONTEND_URL') . '/purchases/' . $transactionId;
+
+        $qrCodeImage = QrCode::format('svg')
+            ->size(256)
+            ->generate($purchaseDetailUrl);
+
+        $qrCodeBase64 = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+
+        $purchase = Purchase::create([
             'product_id' => $validatedData['product_id'],
             'price' => $product->price,
             'transaction_id' => $transactionId,
         ]);
-    }
 
+        return [
+            'purchase' => $purchase,
+            'qr_code_url' => $qrCodeBase64,
+        ];
+    }
     /**
      * Update an existing product.
      *

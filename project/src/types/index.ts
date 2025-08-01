@@ -2,8 +2,11 @@ export interface Product {
   id: string;
   name: string;
   price: number;
+  description?: string; // Bu alan opsiyonel olabilir
+  imageUrl?: string;    // Bu alan da opsiyonel olabilir
 }
 
+// PurchaseResponse arayüzü aynı kalabilir, o doğru görünüyor.
 export interface PurchaseResponse {
   data?: {
     id: number;
@@ -14,4 +17,3 @@ export interface PurchaseResponse {
     updated_at: string;
   };
 }
-

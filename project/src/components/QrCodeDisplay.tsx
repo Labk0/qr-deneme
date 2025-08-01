@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { QrCode, Download, X } from 'lucide-react';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ErrorMessage } from './ErrorMessage';
+import { useApi } from '../hooks/useApi';
 
 interface QrCodeDisplayProps {
   orderId: string;
@@ -9,28 +10,26 @@ interface QrCodeDisplayProps {
   apiBaseUrl: string;
 }
 
+interface QrCodeResponse {
+  qr_code_url: string;
+}
+
 export const QrCodeDisplay: React.FC<QrCodeDisplayProps> = ({ orderId, onClose, apiBaseUrl }) => {
   const [qrCodeUrl, setQrCodeUrl] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const { fetchData, loading, error } = useApi();
 
   useEffect(() => {
     const fetchQrCode = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        // Generate QR code URL that points to the purchase details
-        const purchaseUrl = `${apiBaseUrl}/purchases/${orderId}`;
-        setQrCodeUrl(`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(purchaseUrl)}`);
-      } catch (err) {
-        setError('Failed to generate QR code');
-      } finally {
-        setLoading(false);
+      const response = await fetchData<QrCodeResponse>(`${apiBaseUrl}/api/purchases/${orderId}/qrcode`);
+
+      if (response?.qr_code_url) {
+        setQrCodeUrl(response.qr_code_url);
       }
     };
 
-    fetchQrCode();
+    if (orderId) {
+      fetchQrCode();
+    }
   }, [orderId, apiBaseUrl]);
 
   const handleDownload = () => {
@@ -103,7 +102,7 @@ export const QrCodeDisplay: React.FC<QrCodeDisplayProps> = ({ orderId, onClose, 
                   onClick={onClose}
                   className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium transition-colors"
                 >
-                  Kpata
+                  Kapat
                 </button>
               </div>
             </div>

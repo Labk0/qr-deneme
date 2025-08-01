@@ -7,6 +7,7 @@ use App\Models\Purchase;
 use App\Http\Requests\StorePurchaseRequest;
 use App\Http\Requests\UpdatePurchaseRequest;
 use App\Services\PurchaseService;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PurchaseController extends Controller
 {
@@ -31,19 +32,24 @@ class PurchaseController extends Controller
     {
         $validated = $request->validated();
 
-        $purchase = $this->purchaseService->createPurchase($validated);
+        $purchaseData = $this->purchaseService->createPurchase($validated);
+
+        $purchase = $purchaseData['purchase'];
 
         return (new PurchaseResource($purchase))
             ->response()
             ->setStatusCode(201);
     }
-
     /**
      * Display the specified resource.
      */
-    public function show(Purchase $purchase)
+    public function show($transactionId)
     {
-        return new PurchaseResource($this->purchaseService->getPurchaseById($purchase->id));
+        $purchase = Purchase::where('transaction_id', $transactionId)
+            ->with('product')
+            ->firstOrFail();
+
+        return new PurchaseResource($purchase);
     }
 
     /**
@@ -66,5 +72,20 @@ class PurchaseController extends Controller
         $this->purchaseService->deletePurchase($purchase->id);
 
         return response()->noContent();
+    }
+
+    public function getQrCode($transactionId)
+    {
+        Purchase::where('transaction_id', $transactionId)->firstOrFail();
+
+        $purchaseDetailUrl = env('FRONTEND_URL') . '/purchases/' . $transactionId;
+
+        $qrCodeData = QrCode::format('svg')->generate($purchaseDetailUrl);
+
+        $qrCodeBase64 = 'data:image/svg+xml;base64,' . base64_encode($qrCodeData);
+
+        return response()->json([
+            'qr_code_url' => $qrCodeBase64
+        ]);
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Product } from '../types';
 import { LoadingSpinner } from './LoadingSpinner';
 import { ErrorMessage } from './ErrorMessage';
-import {ProductListItem} from "./ProductListItem.tsx";
+import { ProductListItem } from "./ProductListItem";
 
 interface PriceListProps {
   products: Product[];
