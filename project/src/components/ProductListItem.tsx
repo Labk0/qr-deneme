@@ -30,7 +30,6 @@ export const ProductListItem: React.FC<ProductListItemProps> = ({
                         className="w-16 h-16 rounded-lg object-cover border border-gray-200"
                     />
                 ) : (
-                    // Eğer resim yoksa, bir kutu içinde varsayılan ikon göster
                     <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center">
                         <Package className="w-8 h-8 text-gray-400" />
                     </div>
@@ -41,7 +40,7 @@ export const ProductListItem: React.FC<ProductListItemProps> = ({
             <div className="flex-1 min-w-0">
                 <p className="text-md font-semibold text-gray-900 truncate">{product.name}</p>
                 <p className="text-sm text-gray-500 truncate">
-                    {product.description || 'No description available.'}
+                    {product.description || 'Açılama bulunamadı.'}
                 </p>
                 <p className="text-md font-bold text-blue-600 mt-1">${product.price}</p>
             </div>

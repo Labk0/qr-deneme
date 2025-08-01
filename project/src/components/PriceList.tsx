@@ -28,7 +28,7 @@ export const PriceList: React.FC<PriceListProps> = ({
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
           <LoadingSpinner size="lg" className="mb-4" />
-          <p className="text-gray-600">Loading products...</p>
+          <p className="text-gray-600">Ürünler Yükleniyor...</p>
         </div>
       </div>
     );
@@ -51,14 +51,14 @@ export const PriceList: React.FC<PriceListProps> = ({
   if (products.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600 text-lg">No products available</p>
+        <p className="text-gray-600 text-lg">Bir ürün bulunamadı.</p>
       </div>
     );
   }
 
   return (
       <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        {/* Ürünleri map ile dönerken ProductCard yerine ProductListItem'ı render ediyoruz.
+          {/*
         Her bir elemanın arasına bir çizgi koymak için `divide-y` kullanıyoruz.
       */}
         <div className="divide-y divide-gray-200">

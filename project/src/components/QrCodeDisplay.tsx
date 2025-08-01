@@ -51,7 +51,7 @@ export const QrCodeDisplay: React.FC<QrCodeDisplayProps> = ({ orderId, onClose, 
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               <QrCode className="w-6 h-6 text-blue-600" />
-              <h2 className="text-xl font-semibold text-gray-900">Your QR Code</h2>
+              <h2 className="text-xl font-semibold text-gray-900">QR Kodun</h2>
             </div>
             <button
               onClick={onClose}
@@ -65,7 +65,7 @@ export const QrCodeDisplay: React.FC<QrCodeDisplayProps> = ({ orderId, onClose, 
             <div className="flex items-center justify-center py-12">
               <div className="text-center">
                 <LoadingSpinner size="lg" className="mb-4" />
-                <p className="text-gray-600">Generating QR code...</p>
+                <p className="text-gray-600">QR kod oluşturuluyor...</p>
               </div>
             </div>
           )}
@@ -88,7 +88,7 @@ export const QrCodeDisplay: React.FC<QrCodeDisplayProps> = ({ orderId, onClose, 
               </div>
               
               <p className="text-gray-600 text-sm mb-6">
-                Scan this QR code to access your purchase details
+                Sipariş detaylarına ulaşmak için bu QR kodu tarayın veya indirin.
               </p>
 
               <div className="flex gap-3">
@@ -97,13 +97,13 @@ export const QrCodeDisplay: React.FC<QrCodeDisplayProps> = ({ orderId, onClose, 
                   className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
                 >
                   <Download className="w-4 h-4" />
-                  Download
+                  İndir
                 </button>
                 <button
                   onClick={onClose}
                   className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 px-4 rounded-lg font-medium transition-colors"
                 >
-                  Close
+                  Kpata
                 </button>
               </div>
             </div>

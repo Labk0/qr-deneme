@@ -35,7 +35,7 @@ export const PurchaseButton: React.FC<PurchaseButtonProps> = ({
       // Reset purchased state after animation
       setTimeout(() => setPurchased(false), 2000);
     } else {
-      onPurchaseError('Purchase failed');
+      onPurchaseError('Satış işlemi başarısız oldu.');
     }
   };
 
@@ -52,17 +52,17 @@ export const PurchaseButton: React.FC<PurchaseButtonProps> = ({
       {loading ? (
         <>
           <LoadingSpinner size="sm" />
-          Processing...
+          İşleniyor...
         </>
       ) : purchased ? (
         <>
           <Check className="w-4 h-4" />
-          Purchased!
+          Satın alındı!
         </>
       ) : (
         <>
           <ShoppingCart className="w-4 h-4" />
-          Purchase
+          Satın al
         </>
       )}
     </button>
